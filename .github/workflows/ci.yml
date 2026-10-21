@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Сборка jar и прогон тестов (Java 21)
+    # ubuntu-latest намеренно не используется: метка мигрирует между релизами
+    # дистрибутива, и среда сборки поменялась бы без единой строчки в diff.
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Чекаут репозитория
+        uses: actions/checkout@v7
+
+      - name: Установка JDK 21 (Temurin) + кэш Maven
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Сборка и тесты (mvn verify)
+        # verify, а не test: именно на фазе verify выполняется гейт покрытия
+        # JaCoCo, поэтому просадка ниже порога роняет сборку, а не проходит мимо.
+        run: mvn -B verify
+
+      - name: Покрытие тестами (порог из pom)
+        run: |
+          CSV=target/site/jacoco/jacoco.csv
+          if [ -f "$CSV" ]; then
+            awk -F, 'NR > 1 { im += $4; ic += $5; bm += $6; bc += $7 }
+                     END { printf "  строки   : %.1f%% (%d/%d)\n  ветвления: %.1f%% (%d/%d)\n",
+                           100*ic/(ic+im), ic, ic+im, 100*bc/(bc+bm), bc, bc+bm }' "$CSV"
+          else
+            echo "::warning::отчёт JaCoCo не найден в $CSV"
+          fi
+
+      - name: Отчёт о покрытии (JaCoCo)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Артефакт query-lib-<version>.jar
+        uses: actions/upload-artifact@v7
+        with:
+          name: query-lib-jar
+          path: target/query-lib-*.jar
+          if-no-files-found: warn
+          retention-days: 14

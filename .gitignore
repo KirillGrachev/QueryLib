@@ -1,0 +1,11 @@
+# Артефакты сборки
+target/
+dependency-reduced-pom.xml
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# ОС
+.DS_Store
