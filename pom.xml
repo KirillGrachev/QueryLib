@@ -103,6 +103,37 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+                    <!-- Защитный порог: CI падает, если покрытие просядет ниже плана.
+                         Бойлерплейт Lombok исключён из метрик через lombok.config.
+                         Порог выставлен чуть ниже фактического (91.9% / 89.0%), чтобы
+                         небольшой рефакторинг не ронял сборку, но просадка на 2%
+                         и больше была видна сразу. -->
+                    <execution>
+                        <id>check-coverage</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.90</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
