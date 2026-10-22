@@ -98,7 +98,10 @@ sql.update(Query.insertInto("counters")
 
 `onDuplicateKeyUpdateExcept()` без аргументов — ошибка: пустой список ключей
 означал бы «обновлять всё», включая первичный ключ. Для этого есть явный
-`onDuplicateKeyUpdateAll()`.
+`onDuplicateKeyUpdateAll()` — но только в MySQL: PostgreSQL и SQLite не умеют
+`ON CONFLICT DO UPDATE` без conflict target, H2 — `MERGE INTO` без `KEY(...)`,
+поэтому на этих диалектах вызов отклоняется ещё при построении запроса
+(`UNSUPPORTED_DIALECT_FEATURE`) с подсказкой использовать `Except(keys)`.
 
 ## Условия
 
