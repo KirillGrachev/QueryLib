@@ -1,0 +1,204 @@
+<!-- Source of docs/images/query-lib.png. Render: headless Chromium (Playwright),
+     viewport 1920x1200, deviceScaleFactor 1, full-page screenshot.
+     Tooling lives in /root/work/tools/html2png/ on the build host. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#000; }
+  body { font-family:"Inter","DejaVu Sans",sans-serif; color:#cecece; -webkit-font-smoothing:antialiased; }
+  .mono { font-family:"JetBrains Mono","DejaVu Sans Mono",monospace; }
+  .wrap { width:1352px; margin:0 auto; }
+  /* top bar */
+  .topbar { padding-top:24px; display:flex; align-items:center; gap:24px; }
+  .tile { width:48px; height:48px; border-radius:14px; background:#141414; border:1px solid #222;
+          display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+  .tile svg { width:24px; height:24px; stroke:#f0f0f0; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .name { font-size:30px; font-weight:700; color:#f0f0f0; letter-spacing:-0.01em; }
+  .ver { margin-left:auto; font-family:"JetBrains Mono",monospace; font-size:20px; color:#9a9a9a;
+         background:#0f0f0f; border:1px solid #222; border-radius:999px; padding:10px 24px; }
+  /* hero */
+  .hero { margin-top:56px; text-align:center; }
+  .pkg { display:inline-block; font-family:"JetBrains Mono",monospace; font-size:20px; color:#8a8a8a;
+         background:#0d0d0d; border:1px solid #1f1f1f; border-radius:999px; padding:8px 28px; }
+  .hero h1 { margin-top:48px; font-size:92px; line-height:1.15; font-weight:800; color:#fff; letter-spacing:-0.025em; }
+  .hero .sub { margin-top:28px; font-size:24px; line-height:1.4; color:#9a9a9a; }
+  /* duo card */
+  .duo { margin-top:56px; border:1px solid #222; border-radius:24px; background:#0a0a0a;
+         display:grid; grid-template-columns:1fr 1fr; }
+  .pane { padding:32px 40px 36px; }
+  .pane + .pane { border-left:1px solid #222; }
+  .phead { display:flex; align-items:center; gap:10px; font-family:"JetBrains Mono",monospace;
+           font-size:19px; color:#6c6c6c; margin-bottom:24px; }
+  .dot { width:12px; height:12px; border-radius:50%; }
+  .fname { margin-left:14px; }
+  .logdiv { display:block; border-top:1px solid #1d1d1d; margin:16px 0; }
+  pre { font-family:"JetBrains Mono",monospace; font-size:21px; line-height:1.8; color:#cecece; font-variant-ligatures:none; }
+  .k{color:#c678dd} .t{color:#e5c07b} .f{color:#61afef} .s{color:#98c379} .n{color:#d19a66}
+  .c{color:#5c6370} .pu{color:#8b8b8b} .g{color:#98c379} .b{color:#61afef} .m{color:#6c6c6c} .w{color:#9a9a9a}
+  .logline { display:flex; gap:14px; }
+  .divider { border:0; border-top:1px solid #1a1a1a; margin:56px 0; }
+  /* principles */
+  .principles h2 { text-align:center; font-size:48px; font-weight:800; color:#fff; letter-spacing:-0.02em; }
+  .prow { margin-top:40px; display:flex; justify-content:center; gap:34px; }
+  .prow + .prow { margin-top:24px; }
+  .pill { font-size:24px; font-weight:500; color:#9a9a9a; background:#0d0d0d; border:1px solid #222;
+          border-radius:999px; padding:16px 36px; }
+  /* sections */
+  .sec { display:grid; grid-template-columns:1fr 660px; gap:56px; align-items:start; }
+  .sec.flip { grid-template-columns:660px 1fr; }
+  .sec .card { border:1px solid #222; border-radius:24px; background:#0a0a0a; padding:32px; }
+  .sec .card pre { font-size:18px; line-height:1.7; }
+  .tile.big { width:56px; height:56px; border-radius:16px; }
+  .tile.big svg { width:26px; height:26px; }
+  .sec h3 { margin-top:28px; font-size:40px; font-weight:800; color:#fff; letter-spacing:-0.02em; }
+  .sec p { margin-top:18px; font-size:23px; line-height:1.5; color:#9a9a9a; }
+  /* footer */
+  .footer { display:flex; align-items:center; gap:20px; padding:8px 0 64px; }
+  .footer .tile { width:40px; height:40px; border-radius:12px; }
+  .footer .tile svg { width:20px; height:20px; }
+  .footer .name { font-size:26px; }
+  .lic { margin-left:auto; text-align:right; }
+  .lic .l1 { font-size:18px; letter-spacing:0.08em; color:#6c6c6c; }
+  .lic .l2 { margin-top:6px; font-size:20px; color:#9a9a9a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="tile"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></div>
+    <div class="name">query-lib</div>
+    <div class="ver">v2.0.0</div>
+  </div>
+
+  <div class="hero">
+    <span class="pkg">me.kirillgrachev.query</span>
+    <h1>Type-safe SQL,<br>without boilerplate.</h1>
+    <div class="sub">A lightweight, zero-dependency Java library for building SQL statements,<br>executing them without a single try-catch, and mapping results functionally.</div>
+  </div>
+
+  <div class="duo">
+    <div class="pane">
+      <div class="phead"><span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span><span class="fname">Example.java</span></div>
+<pre><span class="k">public</span> <span class="t">Optional</span><span class="pu">&lt;</span><span class="t">String</span><span class="pu">&gt;</span> <span class="f">username</span><span class="pu">(</span><span class="t">Sql</span> sql<span class="pu">,</span> <span class="k">int</span> id<span class="pu">)</span> <span class="pu">{</span>
+    <span class="k">return</span> sql<span class="pu">.</span><span class="f">queryOne</span><span class="pu">(</span>
+            <span class="t">Query</span><span class="pu">.</span><span class="f">select</span><span class="pu">(</span><span class="s">"username"</span><span class="pu">).</span><span class="f">from</span><span class="pu">(</span><span class="s">"users"</span><span class="pu">)</span>
+                    <span class="pu">.</span><span class="f">where</span><span class="pu">(</span><span class="s">"id"</span><span class="pu">,</span> id<span class="pu">),</span>
+            rs <span class="pu">-&gt;</span> rs<span class="pu">.</span><span class="f">getString</span><span class="pu">(</span><span class="s">"username"</span><span class="pu">));</span>
+<span class="pu">}</span></pre>
+    </div>
+    <div class="pane">
+      <div class="phead"><span>&gt;_</span><span class="fname">Execution Log</span></div>
+<pre style="font-size:19px;line-height:1.55"><span class="m">10:24:16</span>  <span class="b">[main]</span> INFO
+          Executing: SELECT <span class="pu">"username"</span> FROM <span class="pu">"users"</span>
+          WHERE <span class="pu">"id"</span> = ?
+<span class="m">10:24:16</span>  <span class="b">[main]</span> <span class="g">SUCCESS</span>
+          ResultSet mapped in 12 ms
+<span class="logdiv"></span>
+<span class="g">$</span>  No resource leaks: connection, statement
+   and ResultSet close on every path.</pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="principles">
+    <h2>Core Principles</h2>
+    <div class="prow">
+      <span class="pill">Java 21</span><span class="pill">JDBC</span><span class="pill">Zero Dependencies</span><span class="pill">Type-safe SQL</span>
+    </div>
+    <div class="prow">
+      <span class="pill">BatchExecutor</span><span class="pill">Functional Mappers</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="sec">
+    <div>
+      <div class="tile big"><svg viewBox="0 0 24 24"><path d="M8 6 3 12l5 6"/><path d="M16 6l5 6-5 6"/></svg></div>
+      <h3>Fluent Builder API</h3>
+      <p>Builders for SELECT, INSERT, UPDATE, DELETE and CREATE TABLE. A statement is immutable data &mdash; SQL text plus parameters &mdash; so it can be built once, logged, compared in tests and executed later against any database.</p>
+    </div>
+    <div class="card">
+<pre><span class="t">Insert</span> insert <span class="pu">=</span> <span class="t">Query</span><span class="pu">.</span><span class="f">insertInto</span><span class="pu">(</span><span class="s">"users"</span><span class="pu">)</span>
+        <span class="pu">.</span><span class="f">value</span><span class="pu">(</span><span class="s">"username"</span><span class="pu">,</span> <span class="s">"grachev_ke"</span><span class="pu">)</span>
+        <span class="pu">.</span><span class="f">value</span><span class="pu">(</span><span class="s">"email"</span><span class="pu">,</span> <span class="s">"emperor@example.com"</span><span class="pu">);</span>
+
+<span class="t">Optional</span><span class="pu">&lt;</span><span class="t">Long</span><span class="pu">&gt;</span> id <span class="pu">=</span> sql<span class="pu">.</span><span class="f">insertReturningKey</span><span class="pu">(</span>
+        insert<span class="pu">,</span> rs <span class="pu">-&gt;</span> rs<span class="pu">.</span><span class="f">getLong</span><span class="pu">(</span><span class="n">1</span><span class="pu">));</span></pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="sec flip">
+    <div class="card">
+<pre><span class="c">// identifiers are validated at call site</span>
+<span class="t">Query</span><span class="pu">.</span><span class="f">select</span><span class="pu">(</span><span class="s">"password"</span><span class="pu">)</span>
+        <span class="pu">.</span><span class="f">from</span><span class="pu">(</span><span class="s">"invalid; DROP TABLE users"</span><span class="pu">);</span>
+
+<span class="c">// QueryException: INVALID_IDENTIFIER,</span>
+<span class="c">// no SQL is rendered at all</span></pre>
+    </div>
+    <div>
+      <div class="tile big"><svg viewBox="0 0 24 24"><path d="M12 2 20 6v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div>
+      <h3>Enhanced Security</h3>
+      <p>Table and column names are validated where the call is made: an invalid identifier throws QueryException before any SQL is rendered. Values always travel as bind parameters, and UPDATE or DELETE without WHERE demands an explicit allRows().</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="sec">
+    <div>
+      <div class="tile big"><svg viewBox="0 0 24 24"><path d="M12 2 22 8l-10 6L2 8z"/><path d="M2 12l10 6 10-6"/><path d="M2 16l10 6 10-6"/></svg></div>
+      <h3>Safe Batching</h3>
+      <p>One SQL text per batch: add() rejects a statement whose text differs from the first one, so a mismatched batch fails before the round-trip. Chunks of 500 stay under driver packet limits, and SUCCESS_NO_INFO surfaces as unknownCounts instead of a negative row count.</p>
+    </div>
+    <div class="card">
+<pre><span class="t">BatchResult</span> result <span class="pu">=</span> sql<span class="pu">.</span><span class="f">batch</span><span class="pu">()</span>
+        <span class="pu">.</span><span class="f">add</span><span class="pu">(</span><span class="t">Query</span><span class="pu">.</span><span class="f">insertInto</span><span class="pu">(</span><span class="s">"logs"</span><span class="pu">)</span>
+                <span class="pu">.</span><span class="f">value</span><span class="pu">(</span><span class="s">"msg"</span><span class="pu">,</span> <span class="s">"boot"</span><span class="pu">)</span>
+                <span class="pu">.</span><span class="f">value</span><span class="pu">(</span><span class="s">"lvl"</span><span class="pu">,</span> <span class="s">"INFO"</span><span class="pu">))</span>
+        <span class="pu">.</span><span class="f">add</span><span class="pu">(</span><span class="t">Query</span><span class="pu">.</span><span class="f">insertInto</span><span class="pu">(</span><span class="s">"logs"</span><span class="pu">)</span>
+                <span class="pu">.</span><span class="f">value</span><span class="pu">(</span><span class="s">"msg"</span><span class="pu">,</span> <span class="s">"ready"</span><span class="pu">)</span>
+                <span class="pu">.</span><span class="f">value</span><span class="pu">(</span><span class="s">"lvl"</span><span class="pu">,</span> <span class="s">"INFO"</span><span class="pu">))</span>
+        <span class="pu">.</span><span class="f">chunkSize</span><span class="pu">(</span><span class="n">500</span><span class="pu">)</span>
+        <span class="pu">.</span><span class="f">execute</span><span class="pu">();</span></pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="sec flip">
+    <div class="card">
+<pre><span class="t">List</span><span class="pu">&lt;</span><span class="t">User</span><span class="pu">&gt;</span> users <span class="pu">=</span> sql<span class="pu">.</span><span class="f">inTransaction</span><span class="pu">(</span>tx <span class="pu">-&gt;</span>
+        tx<span class="pu">.</span><span class="f">selectForUpdate</span><span class="pu">(</span>
+                <span class="t">Query</span><span class="pu">.</span><span class="f">select</span><span class="pu">(</span><span class="s">"id"</span><span class="pu">,</span> <span class="s">"name"</span><span class="pu">)</span>
+                        <span class="pu">.</span><span class="f">from</span><span class="pu">(</span><span class="s">"users"</span><span class="pu">)</span>
+                        <span class="pu">.</span><span class="f">where</span><span class="pu">(</span><span class="s">"active"</span><span class="pu">,</span> <span class="k">true</span><span class="pu">),</span>
+                rs <span class="pu">-&gt;</span> <span class="k">new</span> <span class="t">User</span><span class="pu">(</span>rs<span class="pu">.</span><span class="f">getLong</span><span class="pu">(</span><span class="s">"id"</span><span class="pu">),</span>
+                        rs<span class="pu">.</span><span class="f">getString</span><span class="pu">(</span><span class="s">"name"</span><span class="pu">))));</span></pre>
+    </div>
+    <div>
+      <div class="tile big"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></div>
+      <h3>Centralized Execution</h3>
+      <p>One Sql instance owns the DataSource and the Dialect: quoting, pagination and upsert syntax come from it, never from guesswork. Transactions, batches and a raw-connection escape hatch hang off the same object. Dialects: MYSQL, POSTGRES, H2, SQLITE, SQL_SERVER, ORACLE, ANSI, NONE.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="footer">
+    <div class="tile"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></div>
+    <div class="name">query-lib</div>
+    <div class="lic"><div class="l1">LICENSE</div><div class="l2">MIT</div></div>
+  </div>
+
+</div>
+</body>
+</html>
