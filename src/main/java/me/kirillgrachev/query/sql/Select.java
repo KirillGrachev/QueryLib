@@ -479,6 +479,15 @@ public final class Select extends ConditionalStatement<Select> {
                         Map.of("dialect", dialect.name()));
             }
 
+            // В SQLite нет FOR UPDATE: любая запись и так блокирует всю базу, а сам
+            // синтаксис движок отвергает сырой ошибкой уже на исполнении. Отказываем
+            // на этапе построения запроса — как для SQL Server выше.
+            if (dialect == Dialect.SQLITE) {
+                throw QueryException.of(ErrorCode.UNSUPPORTED_DIALECT_FEATURE,
+                        "SQLite has no FOR UPDATE: writes lock the whole database; drop forUpdate()",
+                        Map.of("dialect", dialect.name()));
+            }
+
             sb.append(" FOR UPDATE");
         }
 

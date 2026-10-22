@@ -203,13 +203,17 @@ class SelectSqlTest {
     }
 
     @Test
-    void forUpdateIsRejectedForSqlServer() {
+    void forUpdateIsRejectedForDialectsWithoutIt() {
 
         Select select = Query.select("a").from("t").forUpdate();
 
         assertEquals("SELECT `a` FROM `t` FOR UPDATE", select.getSql(Dialect.MYSQL));
         assertEquals(ErrorCode.UNSUPPORTED_DIALECT_FEATURE,
                 assertThrows(QueryException.class, () -> select.getSql(Dialect.SQL_SERVER)).getCode());
+        // реальный SQLite отвечает на FOR UPDATE синтаксической ошибкой уже на
+        // исполнении — guard срабатывает раньше, на построении запроса
+        assertEquals(ErrorCode.UNSUPPORTED_DIALECT_FEATURE,
+                assertThrows(QueryException.class, () -> select.getSql(Dialect.SQLITE)).getCode());
 
     }
 
