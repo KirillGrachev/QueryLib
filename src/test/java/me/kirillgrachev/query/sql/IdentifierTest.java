@@ -32,11 +32,8 @@ class IdentifierTest {
 
     @Test
     void rejectsNullName() {
-
         QueryException e = assertThrows(QueryException.class, () -> Identifier.of(null));
-
         assertEquals(ErrorCode.NULL_ARGUMENT, e.getCode());
-
     }
 
     @Test
@@ -58,7 +55,6 @@ class IdentifierTest {
 
         for (String bad : new String[]{"users\n", "us\ners", "users\r", "users\u0000", "us\u001Bers"}) {
             QueryException e = assertThrows(QueryException.class, () -> Identifier.of(bad));
-
             assertEquals(ErrorCode.INVALID_IDENTIFIER, e.getCode());
         }
 
@@ -156,13 +152,10 @@ class IdentifierTest {
 
     @Test
     void orderByColumnCannotBeUsedForInjection() {
-
         String sql = Query.select("a").from("t").orderBy("x OR 1=1").getSql(Dialect.MYSQL);
-
         // Пробел в имени легален и остаётся внутри кавычек, поэтому не превращается
         // в часть предложения ORDER BY.
         assertEquals("SELECT `a` FROM `t` ORDER BY `x OR 1=1` ASC", sql);
-
     }
 
     /**
@@ -207,12 +200,10 @@ class IdentifierTest {
 
     @Test
     void sqlServerUsesDifferentClosingBracket() {
-
         // У SQL Server закрывающий символ отличается от открывающего, и удвоение
         // как экранирование там не применяется — вместо этого закрывающая скобка
         // удваивается внутри имени.
         assertEquals("[weird]name]", Identifier.of("weird]name").render(Dialect.SQL_SERVER));
-
     }
 
     @Test

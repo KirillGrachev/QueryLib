@@ -36,10 +36,8 @@ final class Expression {
     private final List<Object> params;
 
     private Expression(String sql, List<Object> params) {
-
         this.sql = sql;
         this.params = params;
-
     }
 
     /**
@@ -51,11 +49,8 @@ final class Expression {
      * @throws me.kirillgrachev.query.exception.QueryException если число плейсхолдеров не совпало
      */
     static @NotNull Expression of(@NotNull String sql, @Nullable Object @NotNull ... params) {
-
         Placeholders.checkCount(sql, params);
-
         return new Expression(sql, copyOf(params));
-
     }
 
     /**
@@ -70,11 +65,8 @@ final class Expression {
      * @return неизменяемый фрагмент
      */
     static @NotNull Expression raw(@NotNull String sql) {
-
         Placeholders.checkCount(sql, new Object[0]);
-
         return new Expression(sql, List.of());
-
     }
 
     /**
@@ -96,21 +88,15 @@ final class Expression {
     }
 
     @NotNull String getSql() {
-
         return sql;
-
     }
 
     @NotNull List<Object> getParams() {
-
         return params;
-
     }
 
     boolean hasParams() {
-
         return !params.isEmpty();
-
     }
 
 }

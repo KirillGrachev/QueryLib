@@ -61,11 +61,8 @@ class SelectSqlTest {
 
     @Test
     void distinctIsRendered() {
-
         String sql = Query.select("city").distinct().from("users").getSql(Dialect.POSTGRES);
-
         assertEquals("SELECT DISTINCT \"city\" FROM \"users\"", sql);
-
     }
 
     @Test
@@ -171,11 +168,8 @@ class SelectSqlTest {
 
     @Test
     void limitWithoutOffsetBecomesZeroOffsetInFetchDialects() {
-
         String sql = Query.select("a").from("t").limit(5).getSql(Dialect.ORACLE);
-
         assertEquals("SELECT \"a\" FROM \"t\" OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY", sql);
-
     }
 
     @Test
@@ -252,11 +246,8 @@ class SelectSqlTest {
 
     @Test
     void rawStatementRejectsPlaceholderMismatch() {
-
         QueryException e = assertThrows(QueryException.class, () -> Query.raw("SELECT ?", 1, 2));
-
         assertEquals(ErrorCode.PLACEHOLDER_COUNT_MISMATCH, e.getCode());
-
     }
 
 }

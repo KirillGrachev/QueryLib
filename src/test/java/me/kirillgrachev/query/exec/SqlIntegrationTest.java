@@ -315,7 +315,6 @@ class SqlIntegrationTest {
 
         assertThrows(IllegalStateException.class, () -> sql.inTransaction(tx -> {
             tx.update(Query.update("users").value("age", 1).where("name", "alice"));
-
             throw new IllegalStateException("body failed");
         }));
 
@@ -361,7 +360,6 @@ class SqlIntegrationTest {
 
         String name = sql.inTransaction(tx -> {
             Select select = Query.select("name").from("users").where("id", 1).forUpdate();
-
             return tx.selectForUpdate(select, rs -> rs.getString("name")).getFirst();
         });
 
@@ -405,17 +403,13 @@ class SqlIntegrationTest {
     }
 
     private int ageOf(String name) {
-
         return sql.queryOne(Query.select("age").from("users").where("name", name),
                 rs -> rs.getInt("age")).orElseThrow();
-
     }
 
     private long countUsers() {
-
         return sql.queryOne(Query.select().expr("COUNT(*)").from("users"),
                 rs -> rs.getLong(1)).orElseThrow();
-
     }
 
 }

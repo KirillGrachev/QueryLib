@@ -37,20 +37,14 @@ class WriteSqlTest {
 
     @Test
     void insertHasNoTrailingSemicolon() {
-
         String sql = Query.insertInto("t").value("a", 1).getSql(Dialect.MYSQL);
-
         assertTrue(!sql.endsWith(";"), "запрос не должен заканчиваться точкой с запятой: " + sql);
-
     }
 
     @Test
     void insertWithSchemaQuotesBothParts() {
-
         String sql = Query.insertInto("shop", "orders").value("id", 1).getSql(Dialect.POSTGRES);
-
         assertEquals("INSERT INTO \"shop\".\"orders\" (\"id\") VALUES (?)", sql);
-
     }
 
     @Test
@@ -226,18 +220,14 @@ class WriteSqlTest {
 
     @Test
     void mysqlIgnoreIsRendered() {
-
         assertEquals("INSERT IGNORE INTO `t` (`a`) VALUES (?)",
                 Query.insertInto("t").value("a", 1).ignore().getSql(Dialect.MYSQL));
-
     }
 
     @Test
     void postgresIgnoreBecomesOnConflictDoNothing() {
-
         assertEquals("INSERT INTO \"t\" (\"a\") VALUES (?) ON CONFLICT DO NOTHING",
                 Query.insertInto("t").value("a", 1).ignore().getSql(Dialect.POSTGRES));
-
     }
 
     @Test
@@ -372,10 +362,8 @@ class WriteSqlTest {
 
     @Test
     void createTableRejectsNonPositiveVarcharLength() {
-
         assertEquals(ErrorCode.INVALID_ARGUMENT_VALUE,
                 assertThrows(QueryException.class, () -> Query.createTable("t").varchar("a", 0)).getCode());
-
     }
 
     @Test
@@ -409,10 +397,8 @@ class WriteSqlTest {
 
     @Test
     void emptyPrimaryKeyIsRejected() {
-
         assertEquals(ErrorCode.INVALID_ARGUMENT_VALUE,
                 assertThrows(QueryException.class, () -> Query.createTable("t").primaryKey()).getCode());
-
     }
 
     @Test

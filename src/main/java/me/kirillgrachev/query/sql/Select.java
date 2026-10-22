@@ -60,7 +60,6 @@ public final class Select extends ConditionalStatement<Select> {
      * входа, поэтому в документации рекомендуется {@code Query.*}.
      */
     public Select() {
-
     }
 
     /**
@@ -89,11 +88,8 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select distinct() {
-
         distinct = true;
-
         return this;
-
     }
 
     /**
@@ -103,11 +99,8 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select col(@NotNull String name) {
-
         selection.add(Selection.ofColumn(Identifier.of(name), null));
-
         return this;
-
     }
 
     /**
@@ -118,11 +111,8 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select col(@NotNull String name, @NotNull String alias) {
-
         selection.add(Selection.ofColumn(Identifier.of(name), Identifier.of(alias)));
-
         return this;
-
     }
 
     /**
@@ -227,9 +217,7 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select innerJoin(@NotNull String tableName, @NotNull Condition on) {
-
         return join(Join.Type.INNER, tableName, on);
-
     }
 
     /**
@@ -240,9 +228,7 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select leftJoin(@NotNull String tableName, @NotNull Condition on) {
-
         return join(Join.Type.LEFT, tableName, on);
-
     }
 
     /**
@@ -253,9 +239,7 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select rightJoin(@NotNull String tableName, @NotNull Condition on) {
-
         return join(Join.Type.RIGHT, tableName, on);
-
     }
 
     /**
@@ -265,14 +249,11 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select groupBy(@NotNull String column) {
-
         // Хранится Identifier, а не готовый текст: диалект становится известен
         // только в момент рендера, и предварительно экранированное через
         // Dialect.NONE имя осталось бы без кавычек во всех диалектах.
         groupBy.add(Identifier.of(column));
-
         return this;
-
     }
 
     /**
@@ -301,9 +282,7 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select orderBy(@NotNull String column) {
-
         return orderBy(column, Order.Direction.ASC);
-
     }
 
     /**
@@ -314,11 +293,8 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select orderBy(@NotNull String column, @NotNull Order.Direction direction) {
-
         orderBy.add(Order.ofColumn(Identifier.of(column), direction));
-
         return this;
-
     }
 
     /**
@@ -389,11 +365,8 @@ public final class Select extends ConditionalStatement<Select> {
      * @return этот объект
      */
     public @NotNull Select forUpdate() {
-
         forUpdate = true;
-
         return this;
-
     }
 
     @Override
@@ -565,31 +538,22 @@ public final class Select extends ConditionalStatement<Select> {
         }
 
         static @NotNull Selection ofColumn(@NotNull Identifier column, @Nullable Identifier alias) {
-
             return new Selection(column, null, alias);
-
         }
 
         static @NotNull Selection ofExpression(@NotNull Expression expression, @Nullable Identifier alias) {
-
             return new Selection(null, expression, alias);
-
         }
 
         @NotNull String render(@NotNull Dialect dialect) {
-
             String rendered = column != null ? column.render(dialect) : expression.getSql();
-
             return alias == null ? rendered : rendered + " AS " + dialect.quote(alias.getName());
-
         }
 
         void collectParams(@NotNull List<Object> target) {
-
             if (expression != null) {
                 target.addAll(expression.getParams());
             }
-
         }
 
     }
@@ -614,10 +578,8 @@ public final class Select extends ConditionalStatement<Select> {
         }
 
         @NotNull String render(@NotNull Dialect dialect) {
-
             return type.name() + " JOIN " + table.render(dialect)
                     + " ON " + condition.render(dialect);
-
         }
 
     }

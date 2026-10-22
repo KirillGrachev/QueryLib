@@ -33,9 +33,7 @@ import java.util.Map;
 public final class Query {
 
     private Query() {
-
         throw new AssertionError("Utility class must not be instantiated");
-
     }
 
     /**
@@ -69,9 +67,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull Insert insertInto(@NotNull String table) {
-
         return new Insert(identifier(table, "table"));
-
     }
 
     /**
@@ -82,9 +78,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull Insert insertInto(@NotNull String schema, @NotNull String table) {
-
         return new Insert(qualified(schema, table));
-
     }
 
     /**
@@ -94,9 +88,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull Update update(@NotNull String table) {
-
         return new Update(identifier(table, "table"));
-
     }
 
     /**
@@ -107,9 +99,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull Update update(@NotNull String schema, @NotNull String table) {
-
         return new Update(qualified(schema, table));
-
     }
 
     /**
@@ -121,9 +111,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull Delete deleteFrom(@NotNull String table) {
-
         return new Delete(identifier(table, "table"));
-
     }
 
     /**
@@ -134,9 +122,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull Delete deleteFrom(@NotNull String schema, @NotNull String table) {
-
         return new Delete(qualified(schema, table));
-
     }
 
     /**
@@ -146,9 +132,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull CreateTable createTable(@NotNull String table) {
-
         return new CreateTable(identifier(table, "table"));
-
     }
 
     /**
@@ -159,9 +143,7 @@ public final class Query {
      * @return новый запрос
      */
     public static @NotNull CreateTable createTable(@NotNull String schema, @NotNull String table) {
-
         return new CreateTable(qualified(schema, table));
-
     }
 
     /**
@@ -186,11 +168,8 @@ public final class Query {
 
     private static @NotNull Identifier identifier(@NotNull String value,
                                                                             @NotNull String role) {
-
         requireNonNull(value, role);
-
         return Identifier.of(value);
-
     }
 
     private static @NotNull Identifier qualified(@NotNull String schema,

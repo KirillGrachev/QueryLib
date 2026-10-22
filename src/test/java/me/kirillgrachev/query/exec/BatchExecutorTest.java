@@ -192,11 +192,8 @@ class BatchExecutorTest {
 
     @Test
     void invalidChunkSizeIsRejected() {
-
         QueryException e = assertThrows(QueryException.class, () -> sql.batch().chunkSize(0));
-
         assertEquals(ErrorCode.INVALID_ARGUMENT_VALUE, e.getCode());
-
     }
 
     @Test
@@ -219,10 +216,8 @@ class BatchExecutorTest {
     }
 
     private long countRows() {
-
         return sql.queryOne(Query.select().expr("COUNT(*)").from("logs"),
                 rs -> rs.getLong(1)).orElseThrow();
-
     }
 
 }

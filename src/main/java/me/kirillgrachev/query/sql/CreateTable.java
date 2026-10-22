@@ -46,9 +46,7 @@ public final class CreateTable implements SqlStatement {
      * входа, поэтому в документации рекомендуется {@code Query.*}.
      */
     public CreateTable(@NotNull Identifier table) {
-
         this.table = table;
-
     }
 
     /**
@@ -57,11 +55,8 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable ifNotExists() {
-
         ifNotExists = true;
-
         return this;
-
     }
 
     /**
@@ -76,11 +71,8 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable column(@NotNull String name, @NotNull String type) {
-
         columns.add(new Column(Identifier.of(name), requireNonBlank(type, "type"), null, false));
-
         return this;
-
     }
 
     /**
@@ -90,9 +82,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable intColumn(@NotNull String name) {
-
         return column(name, "INT");
-
     }
 
     /**
@@ -102,9 +92,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объекта
      */
     public @NotNull CreateTable bigIntColumn(@NotNull String name) {
-
         return column(name, "BIGINT");
-
     }
 
     /**
@@ -132,9 +120,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable text(@NotNull String name) {
-
         return column(name, "TEXT");
-
     }
 
     /**
@@ -144,9 +130,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable bool(@NotNull String name) {
-
         return column(name, "BOOLEAN");
-
     }
 
     /**
@@ -156,9 +140,7 @@ public final class CreateTable implements SqlStatement {
      * @throws QueryException если колонки ещё не добавлены
      */
     public @NotNull CreateTable notNull() {
-
         return modifyLast(c -> new Column(c.name, c.type, c.defaultValue, true));
-
     }
 
     /**
@@ -170,9 +152,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable autoIncrement() {
-
         return modifyLast(c -> new Column(c.name, c.type, c.defaultValue, c.notNull, true));
-
     }
 
     /**
@@ -182,9 +162,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable defaultValue(@NotNull Object value) {
-
         return modifyLast(c -> new Column(c.name, c.type, Expression.of("?", value), c.notNull, c.autoIncrement));
-
     }
 
     /**
@@ -215,9 +193,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable intKey(@NotNull String name) {
-
         return intColumn(name).notNull().autoIncrement().primaryKey(name);
-
     }
 
     /**
@@ -227,9 +203,7 @@ public final class CreateTable implements SqlStatement {
      * @return этот объект
      */
     public @NotNull CreateTable bigIntKey(@NotNull String name) {
-
         return bigIntColumn(name).notNull().autoIncrement().primaryKey(name);
-
     }
 
     @Override
@@ -327,9 +301,7 @@ public final class CreateTable implements SqlStatement {
                        String type,
                        @Nullable Expression defaultValue,
                        boolean notNull) {
-
             this(name, type, defaultValue, notNull, false);
-
         }
 
         private Column(Identifier name,
@@ -389,15 +361,11 @@ public final class CreateTable implements SqlStatement {
         }
 
         private @NotNull String notNullSuffix() {
-
             return notNull ? " NOT NULL" : "";
-
         }
 
         private @NotNull String defaultSuffix() {
-
             return defaultValue == null ? "" : " DEFAULT " + defaultValue.getSql();
-
         }
 
     }

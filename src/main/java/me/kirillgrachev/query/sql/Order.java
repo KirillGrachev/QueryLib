@@ -24,13 +24,10 @@ public final class Order {
 
     /** Направление сортировки. */
     public enum Direction {
-
         /** По возрастанию. */
         ASC,
-
         /** По убыванию. */
         DESC
-
     }
 
     /** Колонка, если сортировка задана именем колонки. */
@@ -59,9 +56,7 @@ public final class Order {
      * @return элемент сортировки
      */
     static @NotNull Order ofColumn(@NotNull Identifier column, @NotNull Direction direction) {
-
         return new Order(column, null, direction);
-
     }
 
     /**
@@ -72,9 +67,7 @@ public final class Order {
      * @return элемент сортировки
      */
     static @NotNull Order ofExpression(@NotNull Expression expression, @NotNull Direction direction) {
-
         return new Order(null, expression, direction);
-
     }
 
     /**
@@ -89,11 +82,8 @@ public final class Order {
      * @return текст элемента
      */
     @NotNull String render(@NotNull Dialect dialect) {
-
         String rendered = column != null ? column.render(dialect) : expression.getSql();
-
         return rendered + " " + direction.name();
-
     }
 
     /**
@@ -102,18 +92,14 @@ public final class Order {
      * @param target список параметров запроса
      */
     void collectParams(@NotNull List<Object> target) {
-
         if (expression != null) {
             target.addAll(expression.getParams());
         }
-
     }
 
     @Override
     public String toString() {
-
         return (column != null ? column.toString() : expression.getSql()) + " " + direction.name();
-
     }
 
     /**
@@ -122,9 +108,7 @@ public final class Order {
      * @return неизменяемый список, пустой для сортировки по имени колонки
      */
     public @NotNull List<Object> getParams() {
-
         return expression == null ? Collections.emptyList() : expression.getParams();
-
     }
 
 }

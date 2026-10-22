@@ -110,40 +110,30 @@ class ParamBinderTest {
 
     @Test
     void nullIsBoundThroughSetNull() {
-
         // setObject(i, null) не позволяет драйверу определить SQL-тип и частью
         // драйверов отвергается; корректный путь — setNull с Types.NULL (0).
         assertEquals("setNull(1, 0)", bind((Object) null));
-
     }
 
     @Test
     void emptyOptionalIsBoundAsNull() {
-
         assertEquals("setNull(1, 0)", bind(Optional.empty()));
-
     }
 
     @Test
     void optionalIsUnwrappedToItsValue() {
-
         assertEquals("setString(1, \"x\")", bind(Optional.of("x")));
         assertEquals("setInt(1, 7)", bind(Optional.of(7)));
-
     }
 
     @Test
     void nestedOptionalIsUnwrapped() {
-
         assertEquals("setString(1, \"deep\")", bind(Optional.of(Optional.of("deep"))));
-
     }
 
     @Test
     void enumIsBoundByNameNotByToString() {
-
         assertEquals("setString(1, \"RED\")", bind(Color.RED));
-
     }
 
     @Test
@@ -162,34 +152,24 @@ class ParamBinderTest {
 
     @Test
     void bigDecimalUsesSetBigDecimal() {
-
         assertEquals("setBigDecimal(1, 12.34)", bind(new BigDecimal("12.34")));
-
     }
 
     @Test
     void byteArrayUsesSetBytes() {
-
         String call = bind(new byte[]{1, 2, 3});
-
         assertTrue(call.startsWith("setBytes(1, [B@"), "ожидался setBytes, получено: " + call);
-
     }
 
     @Test
     void uuidIsBoundAsString() {
-
         UUID id = UUID.fromString("00000000-0000-0000-0000-000000000001");
-
         assertEquals("setString(1, \"00000000-0000-0000-0000-000000000001\")", bind(id));
-
     }
 
     @Test
     void characterIsBoundAsString() {
-
         assertEquals("setString(1, \"a\")", bind('a'));
-
     }
 
     @Test
@@ -233,9 +213,7 @@ class ParamBinderTest {
         Object custom = new Object() {
             @Override
             public String toString() {
-
                 return "custom-value";
-
             }
         };
 

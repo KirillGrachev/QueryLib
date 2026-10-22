@@ -39,9 +39,7 @@ public final class Update extends ConditionalStatement<Update> {
      * входа, поэтому в документации рекомендуется {@code Query.*}.
      */
     public Update(@NotNull Identifier table) {
-
         this.table = table;
-
     }
 
     /**
@@ -96,9 +94,7 @@ public final class Update extends ConditionalStatement<Update> {
      * @return этот объект
      */
     public @NotNull Update valueNull(@NotNull String column) {
-
         return valueExpr(column, "NULL");
-
     }
 
     /**
@@ -109,9 +105,7 @@ public final class Update extends ConditionalStatement<Update> {
      * @return этот объект
      */
     public @NotNull Update valueNullable(@NotNull String column, @Nullable Object value) {
-
         return value == null ? valueNull(column) : valueExpr(column, "?", value);
-
     }
 
     /**
@@ -122,11 +116,8 @@ public final class Update extends ConditionalStatement<Update> {
      * @return этот объект
      */
     public @NotNull Update allRows() {
-
         allRows = true;
-
         return this;
-
     }
 
     @Override

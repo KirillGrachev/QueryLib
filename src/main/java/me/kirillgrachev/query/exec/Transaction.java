@@ -28,10 +28,8 @@ public final class Transaction {
     private final Dialect dialect;
 
     Transaction(@NotNull Connection connection, @NotNull Dialect dialect) {
-
         this.connection = connection;
         this.dialect = dialect;
-
     }
 
     /**
@@ -44,39 +42,27 @@ public final class Transaction {
      * @return открытое соединение транзакции
      */
     public @NotNull Connection getConnection() {
-
         return connection;
-
     }
 
     public @NotNull Dialect getDialect() {
-
         return dialect;
-
     }
 
     public <T> @NotNull Optional<T> queryOne(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return Statements.queryOne(connection, st, dialect, mapper);
-
     }
 
     public <T> @NotNull List<T> queryAll(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return Statements.queryAll(connection, st, dialect, mapper);
-
     }
 
     public int update(@NotNull SqlStatement st) {
-
         return Statements.update(connection, st, dialect);
-
     }
 
     public <T> @NotNull Optional<T> insertReturningKey(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return Statements.updateReturningKey(connection, st, dialect, mapper);
-
     }
 
     /**
@@ -93,9 +79,7 @@ public final class Transaction {
      * @return строки, заблокированные до конца транзакции
      */
     public <T> @NotNull List<T> selectForUpdate(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return Statements.queryAll(connection, st, dialect, mapper);
-
     }
 
     /**
@@ -108,9 +92,7 @@ public final class Transaction {
      * @return исполнитель пакетов, привязанный к соединению транзакции
      */
     public @NotNull BatchExecutor batch() {
-
         return new BatchExecutor(connection, dialect);
-
     }
 
 }

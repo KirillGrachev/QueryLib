@@ -56,23 +56,17 @@ public final class RawSql implements SqlStatement {
      */
     @Override
     public @NotNull String getSql(@NotNull Dialect dialect) {
-
         return sql;
-
     }
 
     @Override
     public @NotNull List<Object> getParams() {
-
         return params;
-
     }
 
     @Override
     public String toString() {
-
         return "RawSql[" + sql + ", params=" + params.size() + "]";
-
     }
 
 }

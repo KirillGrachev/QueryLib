@@ -27,19 +27,15 @@ class PlaceholdersTest {
 
     @Test
     void ignoresPlaceholderInsideSingleQuotedLiteral() {
-
         assertEquals(0, Placeholders.count("name = 'a?b'"));
         assertEquals(1, Placeholders.count("name = 'a?b' AND id = ?"));
-
     }
 
     @Test
     void understandsDoubledQuoteAsEscape() {
-
         // 'it''s ?' — литерал с апострофом, вопросительный знак внутри него.
         assertEquals(0, Placeholders.count("name = 'it''s ?'"));
         assertEquals(1, Placeholders.count("name = 'it''s ?' AND id = ?"));
-
     }
 
     @Test
@@ -54,36 +50,28 @@ class PlaceholdersTest {
 
     @Test
     void ignoresPlaceholdersInLineComment() {
-
         assertEquals(0, Placeholders.count("a = 1 -- why? because ?"));
         assertEquals(1, Placeholders.count("a = ? -- comment with ? inside"));
-
     }
 
     @Test
     void ignoresPlaceholdersInBlockComment() {
-
         assertEquals(0, Placeholders.count("a = 1 /* what about ? */"));
         assertEquals(2, Placeholders.count("a = ? /* ? */ AND b = ?"));
-
     }
 
     @Test
     void unterminatedLiteralSwallowsTheRest() {
-
         // Несбалансированная кавычка трактуется консервативно: остаток строки
         // считается содержимым литерала. Это даёт заниженное число плейсхолдеров
         // и понятную ошибку валидации вместо молча неверного запроса.
         assertEquals(0, Placeholders.count("name = 'unterminated ?"));
-
     }
 
     @Test
     void checkCountPassesOnMatch() {
-
         Placeholders.checkCount("a = ? AND b = ?", new Object[]{1, 2});
         Placeholders.checkCount("name = 'a?b'", new Object[]{});
-
     }
 
     @Test

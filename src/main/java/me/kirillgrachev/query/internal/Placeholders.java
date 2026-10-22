@@ -138,19 +138,13 @@ public class Placeholders {
     }
 
     private int skipLineComment(@NotNull String sql, int from) {
-
         int i = sql.indexOf('\n', from);
-
         return i < 0 ? sql.length() : i + 1;
-
     }
 
     private int skipBlockComment(@NotNull String sql, int from) {
-
         int i = sql.indexOf("*/", from + 2);
-
         return i < 0 ? sql.length() : i + 2;
-
     }
 
 }

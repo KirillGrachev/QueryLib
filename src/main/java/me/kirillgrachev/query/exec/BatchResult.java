@@ -35,9 +35,7 @@ public record BatchResult(int statementsExecuted,
      * @return результат с нулевыми счётчиками
      */
     public static @NotNull BatchResult empty() {
-
         return new BatchResult(0, 0, 0, List.of());
-
     }
 
     /**
@@ -50,9 +48,7 @@ public record BatchResult(int statementsExecuted,
      * @return {@code true}, если {@code SUCCESS_NO_INFO} не встречался
      */
     public boolean isRowCountExact() {
-
         return unknownCounts == 0;
-
     }
 
     /**
@@ -66,9 +62,7 @@ public record BatchResult(int statementsExecuted,
      * @return нижняя оценка числа затронутых строк
      */
     public long effectiveRows() {
-
         return rowsAffected + unknownCounts;
-
     }
 
 }

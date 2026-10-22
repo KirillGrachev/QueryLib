@@ -68,22 +68,16 @@ public enum Dialect {
     private final PaginationStyle paginationStyle;
 
     Dialect(char quoteChar, PaginationStyle paginationStyle) {
-
         this.quoteChar = quoteChar;
         this.paginationStyle = paginationStyle;
-
     }
 
     public char getQuoteChar() {
-
         return quoteChar;
-
     }
 
     public @NotNull PaginationStyle getPaginationStyle() {
-
         return paginationStyle;
-
     }
 
     /**
@@ -165,13 +159,10 @@ public enum Dialect {
 
     /** Синтаксис пагинации, поддерживаемый диалектом. */
     public enum PaginationStyle {
-
         /** {@code LIMIT n OFFSET m} — MySQL, PostgreSQL, SQLite, H2. */
         LIMIT_OFFSET,
-
         /** {@code OFFSET m ROWS FETCH NEXT n ROWS ONLY} — SQL Server, Oracle 12c+. */
         OFFSET_FETCH
-
     }
 
 }

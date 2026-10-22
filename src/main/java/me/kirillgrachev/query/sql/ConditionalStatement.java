@@ -37,9 +37,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @return этот объект
      */
     public final @NotNull T where(@NotNull String column, @NotNull Object value) {
-
         return where(Conditions.eq(column, value));
-
     }
 
     /**
@@ -68,9 +66,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @return этот объект
      */
     public final @NotNull T whereExpr(@NotNull String sql, Object @NotNull ... params) {
-
         return where(Conditions.raw(sql, params));
-
     }
 
     /**
@@ -80,9 +76,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @return этот объект
      */
     public final @NotNull T whereNull(@NotNull String column) {
-
         return where(Conditions.isNull(column));
-
     }
 
     /**
@@ -92,9 +86,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @return этот объект
      */
     public final @NotNull T whereNotNull(@NotNull String column) {
-
         return where(Conditions.isNotNull(column));
-
     }
 
     /**
@@ -105,9 +97,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @return этот объект
      */
     public final @NotNull T whereIn(@NotNull String column, @NotNull java.util.Collection<?> values) {
-
         return where(Conditions.in(column, values));
-
     }
 
     /**
@@ -123,9 +113,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @return этот объект
      */
     public final @NotNull T whereNullable(@NotNull String column, Object value) {
-
         return value == null ? whereNull(column) : where(column, value);
-
     }
 
     /**
@@ -165,17 +153,13 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @param target список, в который добавляются параметры
      */
     protected final void collectConditionParams(@NotNull List<Object> target) {
-
         for (Condition condition : conditions) {
             target.addAll(condition.getParams());
         }
-
     }
 
     protected final boolean hasConditions() {
-
         return !conditions.isEmpty();
-
     }
 
     /**
@@ -188,9 +172,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      */
     @SuppressWarnings("unchecked")
     private @NotNull T self() {
-
         return (T) this;
-
     }
 
     /**
@@ -203,9 +185,7 @@ abstract class ConditionalStatement<T extends ConditionalStatement<T>> implement
      * @param params параметры
      */
     static void checkPlaceholders(@NotNull String sql, Object @NotNull ... params) {
-
         Placeholders.checkCount(sql, params);
-
     }
 
     /**

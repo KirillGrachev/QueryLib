@@ -42,45 +42,31 @@ public final class CountingDataSource implements DataSource {
     private final AtomicInteger resultSetsClosed = new AtomicInteger();
 
     public CountingDataSource(DataSource delegate) {
-
         this.delegate = delegate;
-
     }
 
     public int getConnectionsCreated() {
-
         return connectionsCreated.get();
-
     }
 
     public int getConnectionsClosed() {
-
         return connectionsClosed.get();
-
     }
 
     public int getStatementsCreated() {
-
         return statementsCreated.get();
-
     }
 
     public int getStatementsClosed() {
-
         return statementsClosed.get();
-
     }
 
     public int getResultSetsCreated() {
-
         return resultSetsCreated.get();
-
     }
 
     public int getResultSetsClosed() {
-
         return resultSetsClosed.get();
-
     }
 
     /** Утечка — разница между созданными и закрытыми ресурсами. */
@@ -105,16 +91,12 @@ public final class CountingDataSource implements DataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
-
         return wrapConnection(delegate.getConnection());
-
     }
 
     @Override
     public Connection getConnection(String username, String password) throws SQLException {
-
         return wrapConnection(delegate.getConnection(username, password));
-
     }
 
     private Connection wrapConnection(Connection real) {
@@ -133,9 +115,7 @@ public final class CountingDataSource implements DataSource {
         private final Connection real;
 
         private ConnectionHandler(Connection real) {
-
             this.real = real;
-
         }
 
         @Override
@@ -145,7 +125,6 @@ public final class CountingDataSource implements DataSource {
 
             if (name.equals("close")) {
                 connectionsClosed.incrementAndGet();
-
                 return method.invoke(real, args);
             }
 
@@ -153,7 +132,6 @@ public final class CountingDataSource implements DataSource {
 
             try {
                 result = method.invoke(real, args);
-
             } catch (java.lang.reflect.InvocationTargetException e) {
                 throw e.getCause();
             }
@@ -184,9 +162,7 @@ public final class CountingDataSource implements DataSource {
         private final PreparedStatement real;
 
         private StatementHandler(PreparedStatement real) {
-
             this.real = real;
-
         }
 
         @Override
@@ -196,7 +172,6 @@ public final class CountingDataSource implements DataSource {
 
             if (name.equals("close")) {
                 statementsClosed.incrementAndGet();
-
                 return method.invoke(real, args);
             }
 
@@ -204,7 +179,6 @@ public final class CountingDataSource implements DataSource {
 
             try {
                 result = method.invoke(real, args);
-
             } catch (java.lang.reflect.InvocationTargetException e) {
                 throw e.getCause();
             }
@@ -234,7 +208,6 @@ public final class CountingDataSource implements DataSource {
 
                     try {
                         return method.invoke(real, args);
-
                     } catch (java.lang.reflect.InvocationTargetException e) {
                         throw e.getCause();
                     }
@@ -244,51 +217,37 @@ public final class CountingDataSource implements DataSource {
 
     @Override
     public PrintWriter getLogWriter() throws SQLException {
-
         return delegate.getLogWriter();
-
     }
 
     @Override
     public void setLogWriter(PrintWriter out) throws SQLException {
-
         delegate.setLogWriter(out);
-
     }
 
     @Override
     public void setLoginTimeout(int seconds) throws SQLException {
-
         delegate.setLoginTimeout(seconds);
-
     }
 
     @Override
     public int getLoginTimeout() throws SQLException {
-
         return delegate.getLoginTimeout();
-
     }
 
     @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-
         return delegate.getParentLogger();
-
     }
 
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
-
         return delegate.unwrap(iface);
-
     }
 
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
-
         return delegate.isWrapperFor(iface);
-
     }
 
 }

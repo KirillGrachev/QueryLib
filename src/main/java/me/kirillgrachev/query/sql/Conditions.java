@@ -28,9 +28,7 @@ import java.util.StringJoiner;
 public final class Conditions {
 
     private Conditions() {
-
         throw new AssertionError("Utility class must not be instantiated");
-
     }
 
     /**
@@ -45,45 +43,31 @@ public final class Conditions {
      * @return условие
      */
     public static @NotNull Condition eq(@NotNull String column, @NotNull Object value) {
-
         return comparison(column, "=", value);
-
     }
 
     public static @NotNull Condition ne(@NotNull String column, @NotNull Object value) {
-
         return comparison(column, "<>", value);
-
     }
 
     public static @NotNull Condition gt(@NotNull String column, @NotNull Object value) {
-
         return comparison(column, ">", value);
-
     }
 
     public static @NotNull Condition ge(@NotNull String column, @NotNull Object value) {
-
         return comparison(column, ">=", value);
-
     }
 
     public static @NotNull Condition lt(@NotNull String column, @NotNull Object value) {
-
         return comparison(column, "<", value);
-
     }
 
     public static @NotNull Condition le(@NotNull String column, @NotNull Object value) {
-
         return comparison(column, "<=", value);
-
     }
 
     public static @NotNull Condition like(@NotNull String column, @NotNull String pattern) {
-
         return comparison(column, "LIKE", pattern);
-
     }
 
     /**
@@ -93,19 +77,13 @@ public final class Conditions {
      * @return условие
      */
     public static @NotNull Condition isNull(@NotNull String column) {
-
         Identifier id = Identifier.of(column);
-
         return SimpleCondition.of(dialect -> id.render(dialect) + " IS NULL", List.of());
-
     }
 
     public static @NotNull Condition isNotNull(@NotNull String column) {
-
         Identifier id = Identifier.of(column);
-
         return SimpleCondition.of(dialect -> id.render(dialect) + " IS NOT NULL", List.of());
-
     }
 
     /**
@@ -126,15 +104,11 @@ public final class Conditions {
      * @throws QueryException если набор пуст
      */
     public static @NotNull Condition in(@NotNull String column, @NotNull Collection<?> values) {
-
         return membership(column, values, false);
-
     }
 
     public static @NotNull Condition notIn(@NotNull String column, @NotNull Collection<?> values) {
-
         return membership(column, values, true);
-
     }
 
     /**
@@ -165,9 +139,7 @@ public final class Conditions {
      * @return составное условие в скобках
      */
     public static @NotNull Condition allOf(@NotNull Condition @NotNull ... conditions) {
-
         return composite("AND", conditions);
-
     }
 
     /**
@@ -177,9 +149,7 @@ public final class Conditions {
      * @return составное условие в скобках
      */
     public static @NotNull Condition anyOf(@NotNull Condition @NotNull ... conditions) {
-
         return composite("OR", conditions);
-
     }
 
     /**
@@ -295,38 +265,28 @@ public final class Conditions {
 
         private SimpleCondition(java.util.function.Function<Dialect, String> renderer,
                                 java.util.function.Supplier<List<Object>> paramsSupplier) {
-
             this.renderer = renderer;
             this.paramsSupplier = paramsSupplier;
-
         }
 
         static @NotNull SimpleCondition of(@NotNull java.util.function.Function<Dialect, String> renderer,
                                            @NotNull List<Object> params) {
-
             return new SimpleCondition(renderer, () -> params);
-
         }
 
         static @NotNull SimpleCondition of(@NotNull java.util.function.Function<Dialect, String> renderer,
                                            @NotNull java.util.function.Supplier<List<Object>> supplier) {
-
             return new SimpleCondition(renderer, supplier);
-
         }
 
         @Override
         public @NotNull String render(@NotNull Dialect dialect) {
-
             return renderer.apply(dialect);
-
         }
 
         @Override
         public @NotNull List<Object> getParams() {
-
             return paramsSupplier.get();
-
         }
 
     }

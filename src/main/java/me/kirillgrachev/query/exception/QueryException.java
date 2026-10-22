@@ -48,23 +48,17 @@ public final class QueryException extends RuntimeException {
     }
 
     public static @NotNull QueryException of(@NotNull ErrorCode code) {
-
         return new QueryException(code, code.getDefaultMessage(), Map.of(), null);
-
     }
 
     public static @NotNull QueryException of(@NotNull ErrorCode code, @NotNull String message) {
-
         return new QueryException(code, message, Map.of(), null);
-
     }
 
     public static @NotNull QueryException of(@NotNull ErrorCode code,
                                              @NotNull String message,
                                              @NotNull Throwable cause) {
-
         return new QueryException(code, message, Map.of(), cause);
-
     }
 
     /**
@@ -78,36 +72,26 @@ public final class QueryException extends RuntimeException {
     public static @NotNull QueryException of(@NotNull ErrorCode code,
                                              @NotNull String message,
                                              @NotNull Map<String, Object> context) {
-
         return new QueryException(code, message, context, null);
-
     }
 
     public static @NotNull QueryException of(@NotNull ErrorCode code,
                                              @NotNull String message,
                                              @NotNull Map<String, Object> context,
                                              @Nullable Throwable cause) {
-
         return new QueryException(code, message, context, cause);
-
     }
 
     public @NotNull ErrorCode getCode() {
-
         return code;
-
     }
 
     public @NotNull ErrorCategory getCategory() {
-
         return code.getCategory();
-
     }
 
     public @NotNull Map<String, Object> getContext() {
-
         return context;
-
     }
 
     /**
@@ -124,11 +108,8 @@ public final class QueryException extends RuntimeException {
      * @return значение, либо {@code null}, если ключа нет или тип не совпал
      */
     public <T> @Nullable T getContextValue(@NotNull String key, @NotNull Class<T> type) {
-
         Object value = context.get(key);
-
         return type.isInstance(value) ? type.cast(value) : null;
-
     }
 
     /**

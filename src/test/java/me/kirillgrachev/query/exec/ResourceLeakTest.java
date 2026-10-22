@@ -228,7 +228,6 @@ class ResourceLeakTest {
 
         assertThrows(IllegalStateException.class, () -> sql.inTransaction(tx -> {
             tx.update(Query.update("items").value("name", "t").where("id", 1));
-
             throw new IllegalStateException("rollback path");
         }));
 
@@ -277,10 +276,8 @@ class ResourceLeakTest {
     }
 
     private void assertNoLeaks() {
-
         assertBalanced();
         assertTrue(counting.getStatementsCreated() > 0, "тест не создал ни одного statement'а");
-
     }
 
 }

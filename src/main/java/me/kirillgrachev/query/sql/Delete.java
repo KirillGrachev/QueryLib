@@ -35,9 +35,7 @@ public final class Delete extends ConditionalStatement<Delete> {
      * входа, поэтому в документации рекомендуется {@code Query.*}.
      */
     public Delete(@NotNull Identifier table) {
-
         this.table = table;
-
     }
 
     /**
@@ -46,11 +44,8 @@ public final class Delete extends ConditionalStatement<Delete> {
      * @return этот объект
      */
     public @NotNull Delete allRows() {
-
         allRows = true;
-
         return this;
-
     }
 
     @Override

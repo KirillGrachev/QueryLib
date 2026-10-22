@@ -59,9 +59,7 @@ public class Statements {
      */
     @FunctionalInterface
     public interface ResultSetHandler<T> {
-
         T handle(@NotNull ResultSet rs) throws SQLException;
-
     }
 
     /**
@@ -109,9 +107,7 @@ public class Statements {
                                              @NotNull SqlStatement st,
                                              @NotNull Dialect dialect,
                                              @NotNull RowMapper<T> mapper) {
-
         return query(con, st, dialect, rs -> rs.next() ? Optional.ofNullable(mapper.map(rs)) : Optional.<T>empty());
-
     }
 
     /**
@@ -163,9 +159,7 @@ public class Statements {
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ParamBinder.bind(ps, sql, st.getParams());
-
             return ps.executeUpdate();
-
         } catch (SQLException e) {
             throw wrap(ErrorCode.SQL_EXECUTION_FAILED, "Update execution failed", sql, st, e);
         }

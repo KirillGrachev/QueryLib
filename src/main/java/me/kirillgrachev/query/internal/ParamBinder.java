@@ -52,11 +52,9 @@ public class ParamBinder {
     public void bind(@NotNull PreparedStatement statement,
                      @NotNull String sql,
                      @NotNull List<Object> params) {
-
         for (int i = 0; i < params.size(); i++) {
             bindOne(statement, sql, i + 1, params.get(i));
         }
-
     }
 
     private void bindOne(@NotNull PreparedStatement statement,
@@ -66,7 +64,6 @@ public class ParamBinder {
 
         try {
             bindValue(statement, index, value);
-
         } catch (SQLException e) {
             Map<String, Object> context = new LinkedHashMap<>();
             context.put("index", index);
@@ -222,11 +219,8 @@ public class ParamBinder {
      * вытеснить из лога всё остальное.
      */
     private @NotNull String truncate(@NotNull String sql) {
-
         int max = 512;
-
         return sql.length() <= max ? sql : sql.substring(0, max) + "... (" + sql.length() + " chars)";
-
     }
 
 }

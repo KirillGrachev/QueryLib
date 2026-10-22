@@ -49,10 +49,8 @@ public final class Identifier {
     private final @Nullable Identifier qualifier;
 
     private Identifier(String name, @Nullable Identifier qualifier) {
-
         this.name = name;
         this.qualifier = qualifier;
-
     }
 
     /**
@@ -63,9 +61,7 @@ public final class Identifier {
      * @throws QueryException с кодом {@link ErrorCode#INVALID_IDENTIFIER}, если имя недопустимо
      */
     public static @NotNull Identifier of(@Nullable String raw) {
-
         return new Identifier(validate(raw, "name"), null);
-
     }
 
     /**
@@ -135,15 +131,11 @@ public final class Identifier {
     }
 
     public @NotNull String getName() {
-
         return name;
-
     }
 
     public @Nullable Identifier getQualifier() {
-
         return qualifier;
-
     }
 
     /**
@@ -153,11 +145,8 @@ public final class Identifier {
      * @return {@code "schema"."name"} либо {@code "name"}, если квалификатора нет
      */
     public @NotNull String render(@NotNull Dialect dialect) {
-
         String rendered = dialect.quote(name);
-
         return qualifier == null ? rendered : qualifier.render(dialect) + "." + rendered;
-
     }
 
     @Override
@@ -178,9 +167,7 @@ public final class Identifier {
 
     @Override
     public int hashCode() {
-
         return 31 * name.hashCode() + (qualifier == null ? 0 : qualifier.hashCode());
-
     }
 
     /**
@@ -191,9 +178,7 @@ public final class Identifier {
      */
     @Override
     public String toString() {
-
         return qualifier == null ? name : qualifier.name + "." + name;
-
     }
 
 }

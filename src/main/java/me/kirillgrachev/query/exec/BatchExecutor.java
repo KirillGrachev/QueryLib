@@ -91,7 +91,6 @@ public final class BatchExecutor {
 
         if (expectedSql == null) {
             expectedSql = sql;
-
         } else if (!sql.equals(expectedSql)) {
             throw QueryException.of(ErrorCode.CONFLICTING_CLAUSES,
                     "Batch requires identical SQL for every entry",
@@ -141,7 +140,6 @@ public final class BatchExecutor {
 
         if (batch.isEmpty()) {
             return BatchResult.empty();
-
         }
 
         if (ownedConnection != null) {
@@ -150,7 +148,6 @@ public final class BatchExecutor {
 
         try (Connection con = dataSource.getConnection()) {
             return runOn(con, batch, true);
-
         } catch (SQLException e) {
             throw QueryException.of(ErrorCode.CONNECTION_UNAVAILABLE,
                     "Failed to obtain a connection for the batch: " + e.getMessage(), Map.of(), e);
@@ -178,9 +175,7 @@ public final class BatchExecutor {
      * @return размер буфера
      */
     public int size() {
-
         return statements.size();
-
     }
 
     private @NotNull BatchResult runOn(@NotNull Connection con,
@@ -250,7 +245,6 @@ public final class BatchExecutor {
             if (restoreAutoCommit && originalAutoCommit) {
                 try {
                     con.setAutoCommit(true);
-
                 } catch (SQLException ignored) {
                     // Соединение закрывается try-with-resources, пул проверит его сам.
                 }
@@ -269,7 +263,6 @@ public final class BatchExecutor {
 
         try {
             con.rollback();
-
         } catch (SQLException ignored) {
             // Исходная ошибка важнее; соединение всё равно закрывается вызывающей стороной.
         }
@@ -285,7 +278,6 @@ public final class BatchExecutor {
             if (count >= 0) {
                 sum += count;
             }
-
         }
 
         return sum;
@@ -308,7 +300,6 @@ public final class BatchExecutor {
             if (count == Statement.SUCCESS_NO_INFO) {
                 unknown++;
             }
-
         }
 
         return unknown;
@@ -316,11 +307,9 @@ public final class BatchExecutor {
     }
 
     private void collect(@NotNull List<Integer> target, int @NotNull [] counts) {
-
         for (int count : counts) {
             target.add(count);
         }
-
     }
 
 }

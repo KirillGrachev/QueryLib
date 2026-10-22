@@ -52,9 +52,7 @@ public final class Insert implements SqlStatement {
      * входа, поэтому в документации рекомендуется {@code Query.*}.
      */
     public Insert(@NotNull Identifier table) {
-
         this.table = table;
-
     }
 
     /**
@@ -63,11 +61,8 @@ public final class Insert implements SqlStatement {
      * @return этот объект
      */
     public @NotNull Insert ignore() {
-
         ignore = true;
-
         return this;
-
     }
 
     /**
@@ -80,11 +75,8 @@ public final class Insert implements SqlStatement {
      * @throws QueryException если значение для этой колонки уже добавлено
      */
     public @NotNull Insert value(@NotNull String column, @NotNull Object value) {
-
         requireNonNull(value, "value");
-
         return valueExpr(column, "?", value);
-
     }
 
     /**
@@ -121,9 +113,7 @@ public final class Insert implements SqlStatement {
      * @return этот объект
      */
     public @NotNull Insert valueNull(@NotNull String column) {
-
         return valueExpr(column, "NULL");
-
     }
 
     /**
@@ -134,9 +124,7 @@ public final class Insert implements SqlStatement {
      * @return этот объект
      */
     public @NotNull Insert valueNullable(@NotNull String column, @Nullable Object value) {
-
         return value == null ? valueNull(column) : valueExpr(column, "?", value);
-
     }
 
     /**
@@ -327,9 +315,7 @@ public final class Insert implements SqlStatement {
     }
 
     private boolean isMysqlFamily(@NotNull Dialect dialect) {
-
         return dialect == Dialect.MYSQL;
-
     }
 
     private @NotNull String renderPostgresIgnore(@NotNull Dialect dialect) {
@@ -448,9 +434,7 @@ public final class Insert implements SqlStatement {
      * @return неизменяемая коллекция имён
      */
     public @NotNull Collection<String> getColumns() {
-
         return values.keySet().stream().map(Identifier::getName).toList();
-
     }
 
 }

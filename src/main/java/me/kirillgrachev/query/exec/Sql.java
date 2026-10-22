@@ -44,10 +44,8 @@ public final class Sql {
     private final Dialect dialect;
 
     private Sql(DataSource dataSource, Dialect dialect) {
-
         this.dataSource = dataSource;
         this.dialect = dialect;
-
     }
 
     /**
@@ -72,15 +70,11 @@ public final class Sql {
     }
 
     public @NotNull DataSource getDataSource() {
-
         return dataSource;
-
     }
 
     public @NotNull Dialect getDialect() {
-
         return dialect;
-
     }
 
     /**
@@ -92,9 +86,7 @@ public final class Sql {
      * @return значение либо пустой {@code Optional}
      */
     public <T> @NotNull Optional<T> queryOne(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return withConnection(con -> Statements.queryOne(con, st, dialect, mapper));
-
     }
 
     /**
@@ -106,9 +98,7 @@ public final class Sql {
      * @return неизменяемый список
      */
     public <T> @NotNull List<T> queryAll(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return withConnection(con -> Statements.queryAll(con, st, dialect, mapper));
-
     }
 
     /**
@@ -118,9 +108,7 @@ public final class Sql {
      * @return число затронутых строк
      */
     public int update(@NotNull SqlStatement st) {
-
         return withConnection(con -> Statements.update(con, st, dialect));
-
     }
 
     /**
@@ -132,9 +120,7 @@ public final class Sql {
      * @return ключ либо пустой {@code Optional}, если СУБД его не вернула
      */
     public <T> @NotNull Optional<T> insertReturningKey(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return withConnection(con -> Statements.updateReturningKey(con, st, dialect, mapper));
-
     }
 
     /**
@@ -146,9 +132,7 @@ public final class Sql {
      * @return неизменяемый список ключей
      */
     public <T> @NotNull List<T> insertReturningKeys(@NotNull SqlStatement st, @NotNull RowMapper<T> mapper) {
-
         return withConnection(con -> Statements.updateReturningKeys(con, st, dialect, mapper));
-
     }
 
     /**
@@ -181,7 +165,6 @@ public final class Sql {
         try {
             originalAutoCommit = con.getAutoCommit();
             con.setAutoCommit(false);
-
         } catch (SQLException e) {
             closeQuietly(con, e);
             throw QueryException.of(ErrorCode.TRANSACTION_FAILED,
@@ -219,7 +202,6 @@ public final class Sql {
                 // в пул, и следующий, кто его возьмёт, не должен унаследовать
                 // выключенный autoCommit от чужой транзакции.
                 con.setAutoCommit(originalAutoCommit);
-
             } catch (SQLException e) {
                 if (failure != null) {
                     failure.addSuppressed(e);
@@ -256,7 +238,6 @@ public final class Sql {
 
         inTransaction(tx -> {
             body.run(tx);
-
             return null;
         });
 
@@ -268,9 +249,7 @@ public final class Sql {
      * @return новый {@link BatchExecutor}
      */
     public @NotNull BatchExecutor batch() {
-
         return new BatchExecutor(dataSource, dialect);
-
     }
 
     /**
@@ -292,7 +271,6 @@ public final class Sql {
 
         try (Connection con = openConnection()) {
             return function.apply(con);
-
         } catch (SQLException e) {
             throw QueryException.of(ErrorCode.SQL_EXECUTION_FAILED,
                     "Failed to execute against connection: " + e.getMessage(),
@@ -307,7 +285,6 @@ public final class Sql {
 
         try {
             con = dataSource.getConnection();
-
         } catch (SQLException e) {
             throw QueryException.of(ErrorCode.CONNECTION_UNAVAILABLE,
                     "DataSource failed to provide a connection: " + e.getMessage(), Map.of(), e);
@@ -329,7 +306,6 @@ public final class Sql {
 
         try {
             con.rollback();
-
         } catch (SQLException rollbackFailure) {
             // Откат прикрепляется к исходной ошибке, а не заменяет её: причина
             // сбоя важнее того, что не удалось отменить его последствия.
@@ -342,12 +318,10 @@ public final class Sql {
 
         try {
             con.close();
-
         } catch (SQLException e) {
             if (original != null) {
                 original.addSuppressed(e);
             }
-
         }
 
     }
@@ -355,25 +329,19 @@ public final class Sql {
     /** Тело транзакции с возвращаемым значением. */
     @FunctionalInterface
     public interface TransactionBody<T> {
-
         T run(@NotNull Transaction tx) throws SQLException;
-
     }
 
     /** Тело транзакции без возвращаемого значения. */
     @FunctionalInterface
     public interface TransactionVoid {
-
         void run(@NotNull Transaction tx) throws SQLException;
-
     }
 
     /** Функция, получающая открытое соединение. */
     @FunctionalInterface
     public interface ConnectionFunction<T> {
-
         T apply(@NotNull Connection con) throws SQLException;
-
     }
 
 }

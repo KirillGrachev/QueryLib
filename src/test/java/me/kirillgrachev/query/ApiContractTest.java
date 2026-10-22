@@ -108,7 +108,6 @@ class ApiContractTest {
 
         assertThrows(IllegalStateException.class, () -> sql.inTransactionVoid(tx -> {
             tx.update(Query.insertInto("kv2").value("k", "a").value("v", 1));
-
             throw new IllegalStateException("rollback");
         }));
 
@@ -125,7 +124,6 @@ class ApiContractTest {
         Integer result = sql.withConnection(con -> {
             try (var st = con.createStatement(); var rs = st.executeQuery("SELECT 42")) {
                 rs.next();
-
                 return rs.getInt(1);
             }
         });
@@ -136,10 +134,8 @@ class ApiContractTest {
 
     @Test
     void withConnectionRejectsNull() {
-
         assertEquals(ErrorCode.NULL_ARGUMENT,
                 assertThrows(QueryException.class, () -> h2().withConnection(null)).getCode());
-
     }
 
     @Test
@@ -226,10 +222,8 @@ class ApiContractTest {
 
     @Test
     void notWrapsConditionInParentheses() {
-
         assertEquals("NOT (\"a\" = ?)", Conditions.not(Conditions.eq("a", 1)).render(Dialect.POSTGRES));
         assertEquals(List.of(1), Conditions.not(Conditions.eq("a", 1)).getParams());
-
     }
 
     @Test
@@ -384,11 +378,8 @@ class ApiContractTest {
 
     @Test
     void exceptionContextIsImmutable() {
-
         QueryException e = QueryException.of(ErrorCode.INVALID_IDENTIFIER, "x", Map.of("k", 1));
-
         assertThrows(UnsupportedOperationException.class, () -> e.getContext().put("k2", 2));
-
     }
 
     @Test

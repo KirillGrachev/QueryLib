@@ -67,22 +67,16 @@ public enum ErrorCode {
     private final ErrorCategory category;
 
     ErrorCode(String defaultMessage, ErrorCategory category) {
-
         this.defaultMessage = defaultMessage;
         this.category = category;
-
     }
 
     public String getDefaultMessage() {
-
         return defaultMessage;
-
     }
 
     public ErrorCategory getCategory() {
-
         return category;
-
     }
 
 }
